@@ -16,10 +16,10 @@ vector<string> getDirectories(string p);
 string searchPath(string cmd);
 void excuteProgram(string path, vector<string> args); 
 
-bool containsAbsPath(string p);
-bool containsRelPath(string P);
-int getNumBackTracks(string p);
-bool containHomePath(string p);
+// bool containsAbsPath(string p);
+// bool containsRelPath(string P);
+// int getNumBackTracks(string p);
+// bool containHomePath(string p);
 
 int main() {
   // Flush after every std::cout / std:cerr
@@ -58,7 +58,10 @@ int main() {
     } else if(args.at(0) == "pwd") { // pwd command
       cout << filesystem::current_path().string() << endl;
     } else if(args.at(0) == "cd") { // cd command
-      filesystem::current_path(args.at(1));
+      if(filesystem::exists(args.at(1)))
+        filesystem::current_path(args.at(1));
+      else 
+        cout << "cd: " << args.at(1) << ": No such file or directory" <<  endl;
       // if(containsAbsPath(args.at(1))) {
       //   // abs path logic 
         
