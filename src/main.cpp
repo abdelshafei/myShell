@@ -33,6 +33,7 @@ int main() {
     vector<string> args = splitArgs(input);
     if(args.at(0) == "exit") {
       exitCode = stoi(args.at(1));
+      cout << args.size() <<  endl;
       cout << args.at(0) << endl;
       return exitCode;
     } else {
