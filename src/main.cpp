@@ -52,13 +52,13 @@ string searchPath(string cmd) {
 
   for(int i = 0; i < dirs.size(); i++) {
     string pathBuilder = dirs.at(i);
-    pathBuilder =+ "/";
-    pathBuilder =+ cmd; 
+    pathBuilder += "/";
+    pathBuilder += cmd; 
     if(filesystem::exists(pathBuilder))
       return pathBuilder;
   }
 
-  return ""
+  return "";
 }
 
 int main() {
