@@ -27,7 +27,7 @@ int main() {
   int exitCode;
 
   for(;;) {
-    cout << "\n$ ";
+    cout << "$ ";
     string input;
     getline(cin, input);
     vector<string> args = splitArgs(input);
@@ -38,6 +38,7 @@ int main() {
       for(int i = 1; i < args.size(); i++) {
         cout << args.at(i) << " ";
       }
+      cout << endl;
     } else {
       cout << input << ": command not found" << endl;
     }
