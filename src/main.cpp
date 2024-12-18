@@ -51,7 +51,7 @@ int main() {
           cout <<args.at(1) << " is " << searchPath(args.at(1)) << endl;
       }
     } else if(args.at(0) == "pwd") {
-      cout << filesystem::current_path() << endl;
+      cout << filesystem::current_path().string() << endl;
     } else {
       if(searchPath(args.at(0)) == "")
         cout << input << ": command not found" << endl;
