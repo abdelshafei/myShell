@@ -9,7 +9,7 @@ vector<string> splitArgs(string src) {
   vector<string> args;
   for(int i = 0; i <= src.size(); i++) {
     if(i == src.size() || src.at(i) == ' ') {
-      args.insert(args.begin(), strBuilder);
+      args.insert(args.end(), strBuilder);
       strBuilder = "";
     } else {
       strBuilder += src.at(i);
