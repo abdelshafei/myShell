@@ -7,7 +7,6 @@
 using namespace std;
 
 string path = std::getenv("PATH");
-cout << path << endl;
 
 vector<string> validCommands = {"exit", "echo", "type"};
 bool isValidCommand(string cmd) {
@@ -65,6 +64,7 @@ string searchPath(string cmd) {
 }
 
 int main() {
+  cout << path << endl;
   // Flush after every std::cout / std:cerr
   cout << unitbuf;
   cerr << unitbuf;
