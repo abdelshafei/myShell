@@ -64,7 +64,6 @@ string searchPath(string cmd) {
 }
 
 int main() {
-  cout << path << endl;
   // Flush after every std::cout / std:cerr
   cout << unitbuf;
   cerr << unitbuf;
@@ -93,13 +92,11 @@ int main() {
       if(path == "") {
         if(isValidCommand(args.at(1)))
           cout << args.at(1) << " is a shell builtin" << endl;
-        else 
-          cout << args.at(1) << ": not found" << endl;
-      } else {
-        if(searchPath(args.at(1)) != "") {
-          cout << args.at(1) << " is " << searchPath(args.at(1)) << endl;
-        } else {
-          cout << args.at(1) << ": not found" << endl;
+        else {
+          if(searchPath(args.at(1)) == "")
+            cout << args.at(1) << ": not found" << endl;
+          else 
+            cout <<args.at(1) << " is " << searchPath(args.at(1)) << endl;
         }
       }
     } else {
