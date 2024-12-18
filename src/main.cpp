@@ -34,6 +34,10 @@ int main() {
     if(args.at(0) == "exit") {
       exitCode = stoi(args.at(1));
       return exitCode;
+    } else if(args.at(0) == "echo") {
+      for(int i = 1; i < args.size(); i++) {
+        cout << args.at(i);
+      }
     } else {
       cout << input << ": command not found" << endl;
     }
