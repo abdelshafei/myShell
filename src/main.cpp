@@ -9,10 +9,8 @@ vector<string> splitArgs(string src) {
   vector<string> args;
   for(int i = 0; i <= src.size(); i++) {
     if(i == src.size() || src.at(i) == ' ') {
-      cout << strBuilder << endl;
       args.insert(args.begin(), strBuilder);
       strBuilder = "";
-      cout << strBuilder << endl;
     } else {
       strBuilder += src.at(i);
     }
@@ -33,7 +31,6 @@ int main() {
     string input;
     getline(cin, input);
     vector<string> args = splitArgs(input);
-    cout << args.size() << endl;
     if(args.at(0) == "exit") {
       cout << args.at(0) << " " << args.at(1) << endl;
       exitCode = stoi(args.at(1));
