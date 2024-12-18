@@ -16,11 +16,6 @@ vector<string> getDirectories(string p);
 string searchPath(string cmd);
 void excuteProgram(string path, vector<string> args); 
 
-// bool containsAbsPath(string p);
-// bool containsRelPath(string P);
-// int getNumBackTracks(string p);
-// bool containHomePath(string p);
-
 int main() {
   // Flush after every std::cout / std:cerr
   cout << unitbuf;
@@ -58,18 +53,15 @@ int main() {
     } else if(args.at(0) == "pwd") { // pwd command
       cout << filesystem::current_path().string() << endl;
     } else if(args.at(0) == "cd") { // cd command
-      if(filesystem::exists(args.at(1)))
-        filesystem::current_path(args.at(1));
-      else 
-        cout << "cd: " << args.at(1) << ": No such file or directory" <<  endl;
-      // if(containsAbsPath(args.at(1))) {
-      //   // abs path logic 
-        
-      // } else if(containsRelPath(args.at(1))) {
-      //   // rel path logic
-      // } else if(containHomePath(args.at(1))) {
-      //   // home path logic
-      // }
+      if(args.at(1) != "~") { // Not home directory
+        if(filesystem::exists(args.at(1)))
+          filesystem::current_path(args.at(1));
+        else 
+          cout << "cd: " << args.at(1) << ": No such file or directory" <<  endl;
+      } else { // Change to home directory
+        string path = getenv("HOME");
+        filesystem::current_path(path);
+      }
     } else {
       if(searchPath(args.at(0)) == "")
         cout << input << ": command not found" << endl;
@@ -150,6 +142,6 @@ void excuteProgram(string path, vector<string> args) {
     exit(1);
   } else if(pid > 0 ) { //Parent process (excutes the actual program)
     int status;
-    waitpid(pid, &status, 0); 
+    waitpid(pid, &status, 0); // waits until the child process has excuted the file and exits
   } 
 }
