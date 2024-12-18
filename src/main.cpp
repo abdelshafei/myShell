@@ -6,8 +6,6 @@
 
 using namespace std;
 
-string path = std::getenv("PATH");
-
 vector<string> validCommands = {"exit", "echo", "type"};
 bool isValidCommand(string cmd) {
   for(int i = 0; i < validCommands.size(); i++) {
@@ -50,12 +48,13 @@ vector<string> getDirectories(string p) {
 }
 
 string searchPath(string cmd) {
+  string path = std::getenv("PATH");
   vector<string> dirs = getDirectories(path);
 
   for(int i = 0; i < dirs.size(); i++) {
     string pathBuilder = dirs.at(i);
     pathBuilder += "/";
-    pathBuilder += cmd; 
+    pathBuilder += cmd;
     if(filesystem::exists(pathBuilder))
       return pathBuilder;
   }
