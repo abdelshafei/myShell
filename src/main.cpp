@@ -33,7 +33,7 @@ int main() {
     vector<string> args = splitArgs(input);
     if(args.at(0) == "exit") {
       exitCode = stoi(args.at(1));
-      cout << exitCode << endl;
+      cout << args.at(1) << endl;
       return exitCode;
     } else {
       cout << input << ": command not found" << endl;
