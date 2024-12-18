@@ -8,7 +8,7 @@ vector<string> splitArgs(string src) {
   string strBuilder = "";
   vector<string> args;
   for(int i = 0; i < src.size(); i++) {
-    if(src.at(i) != ' ' || i == src.size() - 1) {
+    if(src.at(i) != ' ' || i != src.size() - 1) {
       strBuilder += src.at(i);
     } else {
       cout << strBuilder << endl;
