@@ -3,10 +3,62 @@
 #include <vector>
 #include <sstream>
 #include <filesystem>
+#include <sys/wait.h>
+#include <unistd.h>
+
 
 using namespace std;
 
-vector<string> validCommands = {"exit", "echo", "type"};
+vector<string> validCommands = {"exit", "echo", "type", "pwd", "cd"};
+bool isValidCommand(string cmd);
+vector<string> splitArgs(string src);
+vector<string> getDirectories(string p);
+string searchPath(string cmd);
+void excuteProgram(string path, vector<string> args); 
+
+int main() {
+  // Flush after every std::cout / std:cerr
+  cout << unitbuf;
+  cerr << unitbuf;
+
+  int exitCode;
+
+  for(;;) {
+    /* User enters command */
+    cout << "$ ";
+    string input;
+    getline(cin, input);
+
+    /* splits the command into individual argumnets */
+    vector<string> args = splitArgs(input);
+
+    /* excutes commands */
+    if(args.at(0) == "exit") { 
+      exitCode = stoi(args.at(1));
+      return exitCode;
+    } else if(args.at(0) == "echo") {
+      for(int i = 1; i < args.size(); i++) {
+        cout << args.at(i) << " ";
+      }
+      cout << endl;
+    } else if(args.at(0) == "type") {
+      if(isValidCommand(args.at(1)))
+        cout << args.at(1) << " is a shell builtin" << endl;
+      else {
+        if(searchPath(args.at(1)) == "")
+          cout << args.at(1) << ": not found" << endl;
+        else 
+          cout <<args.at(1) << " is " << searchPath(args.at(1)) << endl;
+      }
+    } else {
+      if(searchPath(args.at(0)) == "")
+        cout << input << ": command not found" << endl;
+      else 
+        excuteProgram(searchPath(args.at(0)), args);
+    }
+  }
+}
+
 bool isValidCommand(string cmd) {
   for(int i = 0; i < validCommands.size(); i++) {
     if(validCommands.at(i) == cmd) {
@@ -62,42 +114,22 @@ string searchPath(string cmd) {
   return "";
 }
 
-int main() {
-  // Flush after every std::cout / std:cerr
-  cout << unitbuf;
-  cerr << unitbuf;
+void excuteProgram(string path, vector<string> args) {
+  pid_t pid = fork();
 
-  int exitCode;
+  if(pid == 0) { //Child process (excutes the excutable)
+    vector<char*> c_args;
 
-  for(;;) {
-    /* User enters command */
-    cout << "$ ";
-    string input;
-    getline(cin, input);
+    for(int i = 0; i < args.size(); i++) {
+      c_args.push_back(const_cast<char*>(args.at(i).c_str()));
+    } 
+    c_args.push_back(nullptr); //acts as terminator to prevent execvp from reading out of bounds of the data
 
-    /* splits the command into individual argumnets */
-    vector<string> args = splitArgs(input);
-
-    /* excutes commands */
-    if(args.at(0) == "exit") { 
-      exitCode = stoi(args.at(1));
-      return exitCode;
-    } else if(args.at(0) == "echo") {
-      for(int i = 1; i < args.size(); i++) {
-        cout << args.at(i) << " ";
-      }
-      cout << endl;
-    } else if(args.at(0) == "type") {
-      if(isValidCommand(args.at(1)))
-        cout << args.at(1) << " is a shell builtin" << endl;
-      else {
-        if(searchPath(args.at(1)) == "")
-          cout << args.at(1) << ": not found" << endl;
-        else 
-          cout <<args.at(1) << " is " << searchPath(args.at(1)) << endl;
-      }
-    } else {
-      cout << input << ": command not found" << endl;
-    }
-  }
+    execvp(path.c_str(), c_args.data());
+    perror("execvp");  // If exec fails
+    exit(1);
+  } else if(pid > 0 ) { //Parent process (excutes the actual program)
+    int status;
+    waitpid(pid, &status, 0); 
+  } 
 }
