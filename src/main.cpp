@@ -34,7 +34,7 @@ int main() {
     cout << args.size() << endl;
     if(args.at(0) == "exit") {
       exitCode = stoi(args.at(1));
-      cout << args.at(1) << endl;
+      cout << args.at(0) << endl;
       return exitCode;
     } else {
       cout << input << ": command not found" << endl;
