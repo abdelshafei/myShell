@@ -4,6 +4,17 @@
 
 using namespace std;
 
+vector<string> validCommands = {"exit", "echo", "type"};
+bool isValidCommand(string cmd) {
+  for(int i = 0; i < validCommands.size(); i++) {
+    if(validCommands.at(i) == cmd) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 vector<string> splitArgs(string src) {
   string strBuilder = "";
   vector<string> args;
@@ -39,6 +50,11 @@ int main() {
         cout << args.at(i) << " ";
       }
       cout << endl;
+    } else if(args.at(0) == "type") {
+      if(isValidCommand(args.at(1)))
+        cout << args.at(1) << " is a shell builtin" << endl;
+      else 
+        cout << args.at(1) << ": not found" << endl;
     } else {
       cout << input << ": command not found" << endl;
     }
