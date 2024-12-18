@@ -31,7 +31,7 @@ int main() {
     string input;
     getline(cin, input);
     vector<string> args = splitArgs(input);
-    if(input == "exiit 0") {
+    if(input == "exit 0") {
       cout << args.at(1) << endl;
     }
     if(args.at(0) == "exit") {
