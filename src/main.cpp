@@ -26,11 +26,14 @@ int main() {
 
   int exitCode;
 
-  while(1) {
+  for(;;) {
     cout << "$ ";
     string input;
     getline(cin, input);
     vector<string> args = splitArgs(input);
+    if(input == "exiit 0") {
+      cout << args.at(1) << endl;
+    }
     if(args.at(0) == "exit") {
       exitCode = stoi(args.at(1));
       cout << args.size() <<  endl;
