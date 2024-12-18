@@ -88,15 +88,13 @@ int main() {
       }
       cout << endl;
     } else if(args.at(0) == "type") {
-      if(path == "") {
-        if(isValidCommand(args.at(1)))
-          cout << args.at(1) << " is a shell builtin" << endl;
-        else {
-          if(searchPath(args.at(1)) == "")
-            cout << args.at(1) << ": not found" << endl;
-          else 
-            cout <<args.at(1) << " is " << searchPath(args.at(1)) << endl;
-        }
+      if(isValidCommand(args.at(1)))
+        cout << args.at(1) << " is a shell builtin" << endl;
+      else {
+        if(searchPath(args.at(1)) == "")
+          cout << args.at(1) << ": not found" << endl;
+        else 
+          cout <<args.at(1) << " is " << searchPath(args.at(1)) << endl;
       }
     } else {
       cout << input << ": command not found" << endl;
