@@ -45,6 +45,8 @@ vector<string> getDirectories(string p) {
       strBuilder += p.at(i);
     }
   }
+
+  return dirs;
 }
 
 string searchPath(string cmd) {
