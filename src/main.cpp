@@ -31,6 +31,7 @@ int main() {
     string input;
     getline(cin, input);
     vector<string> args = splitArgs(input);
+    cout << args.size() << endl;
     if(args.at(0) == "exit") {
       exitCode = stoi(args.at(1));
       cout << args.at(1) << endl;
