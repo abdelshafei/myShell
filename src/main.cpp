@@ -16,6 +16,11 @@ vector<string> getDirectories(string p);
 string searchPath(string cmd);
 void excuteProgram(string path, vector<string> args); 
 
+bool containsAbsPath(string p);
+bool containsRelPath(string P);
+int getNumBackTracks(string p);
+bool containHomePath(string p);
+
 int main() {
   // Flush after every std::cout / std:cerr
   cout << unitbuf;
@@ -29,11 +34,11 @@ int main() {
     string input;
     getline(cin, input);
 
-    /* splits the command into individual argumnets */
+    /* splits the command into individual arguments */
     vector<string> args = splitArgs(input);
 
     /* excutes commands */
-    if(args.at(0) == "exit") { 
+    if(args.at(0) == "exit") { // exit command
       exitCode = stoi(args.at(1));
       return exitCode;
     } else if(args.at(0) == "echo") {
@@ -41,7 +46,7 @@ int main() {
         cout << args.at(i) << " ";
       }
       cout << endl;
-    } else if(args.at(0) == "type") {
+    } else if(args.at(0) == "type") { // type command
       if(isValidCommand(args.at(1)))
         cout << args.at(1) << " is a shell builtin" << endl;
       else {
@@ -50,8 +55,18 @@ int main() {
         else 
           cout <<args.at(1) << " is " << searchPath(args.at(1)) << endl;
       }
-    } else if(args.at(0) == "pwd") {
+    } else if(args.at(0) == "pwd") { // pwd command
       cout << filesystem::current_path().string() << endl;
+    } else if(args.at(0) == "cd") { // cd command
+      filesystem::current_path(args.at(1));
+      // if(containsAbsPath(args.at(1))) {
+      //   // abs path logic 
+        
+      // } else if(containsRelPath(args.at(1))) {
+      //   // rel path logic
+      // } else if(containHomePath(args.at(1))) {
+      //   // home path logic
+      // }
     } else {
       if(searchPath(args.at(0)) == "")
         cout << input << ": command not found" << endl;
