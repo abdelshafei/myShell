@@ -11,8 +11,10 @@ vector<string> splitArgs(string src) {
     if(src.at(i) != ' ') {
       strBuilder += src.at(i);
     } else {
+      cout << strBuilder << endl;
       args.insert(args.begin(), strBuilder);
       strBuilder = "";
+      cout << strBuilder << endl;
     }
   }
 
