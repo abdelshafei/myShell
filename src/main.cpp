@@ -50,6 +50,8 @@ int main() {
         else 
           cout <<args.at(1) << " is " << searchPath(args.at(1)) << endl;
       }
+    } else if(args.at(0) == "pwd") {
+      cout << getenv("PATH") << endl;
     } else {
       if(searchPath(args.at(0)) == "")
         cout << input << ": command not found" << endl;
@@ -100,7 +102,7 @@ vector<string> getDirectories(string p) {
 }
 
 string searchPath(string cmd) {
-  string path = std::getenv("PATH");
+  string path = getenv("PATH");
   vector<string> dirs = getDirectories(path);
 
   for(int i = 0; i < dirs.size(); i++) {
