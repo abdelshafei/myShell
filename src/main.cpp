@@ -8,13 +8,13 @@ vector<string> splitArgs(string src) {
   string strBuilder = "";
   vector<string> args;
   for(int i = 0; i < src.size(); i++) {
-    if(src.at(i) != ' ' || i != src.size() - 1) {
-      strBuilder += src.at(i);
-    } else {
+    if(src.at(i) == ' ' || i == src.size() - 1) {
       cout << strBuilder << endl;
       args.insert(args.begin(), strBuilder);
       strBuilder = "";
       cout << strBuilder << endl;
+    } else {
+      strBuilder += src.at(i);
     }
   }
 
