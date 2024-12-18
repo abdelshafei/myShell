@@ -7,6 +7,7 @@
 using namespace std;
 
 string path = std::getenv("PATH");
+cout << path << endl;
 
 vector<string> validCommands = {"exit", "echo", "type"};
 bool isValidCommand(string cmd) {
@@ -89,7 +90,7 @@ int main() {
       }
       cout << endl;
     } else if(args.at(0) == "type") {
-      if(path == nullptr) {
+      if(path == "") {
         if(isValidCommand(args.at(1)))
           cout << args.at(1) << " is a shell builtin" << endl;
         else 
