@@ -89,7 +89,7 @@ int main() {
       }
       cout << endl;
     } else if(args.at(0) == "type") {
-      if(path == "") {
+      if(path == nullptr) {
         if(isValidCommand(args.at(1)))
           cout << args.at(1) << " is a shell builtin" << endl;
         else 
