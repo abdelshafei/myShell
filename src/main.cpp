@@ -142,9 +142,9 @@ vector<string> splitArgs(string src) {
         strBuilder = singleQuoteParsing(src, &i);
       else if(src.at(i) == '"')
         strBuilder = doubleQuoteParsing(src, &i);
-      else if(src.at(i) == '\\' && i+1 < src.size() && isEscapingChar(src, i+1) != "") {
+      else if(src.at(i) == '\\' && isEscapingChar(src, i+1) != "") {
         strBuilder += src.at(i+1);
-        ++i;
+        cout << src.at(i+1) << endl;
       } else 
         strBuilder += src.at(i);
     }
@@ -230,7 +230,7 @@ string isEscapingChar(string src, int index) {
     return "\"";
   else if(src.at(index) == '\\')
     return "\\";
-  else if(index+1 < src.size() && src.at(index) == '\\' && src.at(index+1) == ' ')
+  else if(src.at(index) == ' ')
     return " ";
   else 
     return "";
