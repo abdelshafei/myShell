@@ -232,7 +232,7 @@ string isEscapingChar(string src, int index) {
   if(index >= src.size()) return "";
 
   if(index+1 < src.size() && src.at(index) == 'n')
-    return "\n";
+    return "n";
   else if(src.at(index) == '\"')
     return "\"";
   else if(src.at(index) == '\\')
