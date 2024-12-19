@@ -43,7 +43,6 @@ int main() {
       return exitCode;
     } else if(args.at(0) == "echo") {
       for(int i = 1; i < args.size(); i++) {
-        cout << args.size() << endl;
         cout << args.at(i) << " ";
       }
       cout << endl;
@@ -125,12 +124,10 @@ string doubleQuoteParsing(string src, int* startIndex) {
 vector<string> splitArgs(string src) {
   string strBuilder = "";
   vector<string> args;
-  bool isSingleQuote = false;
-  bool isDoubleQoute = false;
 
   for(int i = 0; i <= src.size(); i++) {
     if(i == src.size() || src.at(i) == ' ') {
-      args.insert(args.end(), strBuilder);
+      args.push_back(strBuilder);
       strBuilder = "";
     } else {
       if(src.at(i) == '\'')
