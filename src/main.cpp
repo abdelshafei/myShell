@@ -118,7 +118,10 @@ string doubleQuoteParsing(string src, int* startIndex) {
     } else if(src.at(i) == '\\' && isEscapingChar(src, i+1) != "") {
       strBuilder += isEscapingChar(src, i+1);
       if(isEscapingChar(src, i+1) == "\"") ++i;
-      else if(isEscapingChar(src, i+1) == "\\n") i + 2;
+      else if(isEscapingChar(src, i+1) == "\\n") {
+        cout << "here" << endl;
+        i + 2;
+      }
     } else 
       strBuilder += src.at(i);
   }
@@ -140,11 +143,10 @@ vector<string> splitArgs(string src) {
         strBuilder = singleQuoteParsing(src, &i);
       else if(src.at(i) == '"')
         strBuilder = doubleQuoteParsing(src, &i);
-      else if(src.at(i) == '\\' && i+1 < src.size()) {
+      else if(src.at(i) == '\\' && i+1 < src.size() && isEscapingChar(src, i+1) != "") {
         strBuilder += src.at(i+1);
         ++i;
-      }
-      else 
+      } else 
         strBuilder += src.at(i);
     }
 
