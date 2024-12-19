@@ -71,6 +71,7 @@ int main() {
       for(int i = 1; i < args.size(); i++) {
         readFileContent(args.at(i));
       }
+      cout << endl;
     } else {
       if(searchPath(args.at(0)) == "")
         cout << input << ": command not found" << endl;
@@ -208,7 +209,7 @@ void readFileContent(const string& filePath) {
   contentStream << file.rdbuf(); // Read the entire file buffer into the stream
 
   std::string content = contentStream.str(); // Convert to string
-  std::cout << content << std::endl;
+  std::cout << content;
 
   file.close();
 }
