@@ -226,6 +226,8 @@ string isEscapingChar(string src, int index) {
     return "\\n";
   else if(src.at(index) == '\"')
     return "\"";
+  else if(src.at(index) == '\\')
+    return "\\";
   else 
     return "";
 }
