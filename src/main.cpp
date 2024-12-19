@@ -10,6 +10,7 @@
 using namespace std;
 
 vector<string> validCommands = {"exit", "echo", "type", "pwd", "cd", "history"};
+
 bool isValidCommand(string cmd);
 
 vector<string> splitArgs(string src);
@@ -20,6 +21,8 @@ vector<string> getDirectories(string p);
 string searchPath(string cmd);
 void excuteProgram(string path, vector<string> args); 
 void readFileContent(const string& filePath);
+
+bool isEscapingChar(string src, int index);
 
 int main() {
   // Flush after every std::cout / std:cerr
@@ -113,17 +116,9 @@ string doubleQuoteParsing(string src, int* startIndex) {
     if(src.at(i) == '"') {
       *startIndex = i;
       break;
-    } 
-    // else if(src.at(i) == '\'') {
-    //   if(inSingleQuote) inSingleQuote = false;
-    //   else              inSingleQuote = true;
-    //   strBuilder += src.at(i);
-    // } 
-    // else if(src.at(i) == '\\' && i+1 < src.size()) {
-    //   strBuilder += src.at(i+1);
-    //   ++i;
-    // } 
-    else 
+    } else if(src.at(i) == '\\' && isEscapingChar(src, i+1)) {
+
+    } else 
       strBuilder += src.at(i);
   }
 
@@ -222,4 +217,15 @@ void readFileContent(const string& filePath) {
   cout << content;
 
   file.close();
+}
+
+bool isEscapingChar(string src, int index) {
+  if(index >= src.size()) return false;
+  
+  if(index+1 < src.size() && src.at(index) == '\\' && src.at(index+1) == 'n')
+    return true;
+  else if(src.at(index) == '\"')
+    return true;
+  else 
+    return false;
 }
