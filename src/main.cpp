@@ -107,12 +107,16 @@ string singleQuoteParsing(string src, int* startIndex) {
 // implement escaping characters 
 string doubleQuoteParsing(string src, int* startIndex) {
   string strBuilder = "";
+  bool inSingleQuote = false; 
 
   for(int i = *startIndex + 1; i < src.size(); i++) {
     if(src.at(i) == '"') {
       *startIndex = i;
       break;
-    } else if(src.at(i) == '\\' && i+1 < src.size()) {
+    } else if(src.at(i) == '\'') {
+      if(inSingleQuote) inSingleQuote = false;
+      else              inSingleQuote = true;
+    } else if(src.at(i) == '\\' && i+1 < src.size() && !inSingleQuote) {
       strBuilder += src.at(i+1);
       ++i;
     } else 
