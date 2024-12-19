@@ -143,12 +143,15 @@ vector<string> splitArgs(string src) {
       else if(src.at(i) == '"') {
         strBuilder = doubleQuoteParsing(src, &i);
       }
-      else if(src.at(i) == '\\' && (isEscapingChar(src, i+1) != "" || src.at(i+1) == ' ')) {
+      else if(src.at(i) == '\\' && (isEscapingChar(src, i+1) != "" || src.at(i+1) == ' ' || src.at(i+1) == 'n')) {
         if(isEscapingChar(src, i+1).size() == 1) {
           strBuilder += isEscapingChar(src, i+1);
           ++i;
         } else if(src.at(i+1) == ' ') {
           strBuilder += " ";
+          i += 1;
+        } else if(src.at(i+1) == 'n') {
+          strBuilder += "n";
           i += 1;
         }
       } else {
@@ -231,9 +234,7 @@ void readFileContent(const string& filePath) {
 string isEscapingChar(string src, int index) {
   if(index >= src.size()) return "";
 
-  if(index+1 < src.size() && src.at(index) == 'n')
-    return "n";
-  else if(src.at(index) == '\"')
+  if(src.at(index) == '\"')
     return "\"";
   else if(src.at(index) == '\\')
     return "\\";
