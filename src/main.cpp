@@ -5,6 +5,7 @@
 #include <filesystem>
 #include <sys/wait.h>
 #include <unistd.h>
+#include <sys/stat.h>
 
 
 using namespace std;
@@ -202,6 +203,11 @@ void excuteProgramWCat(string fPath) {
   if(pid == 0) { //Child process (excutes the excutable)
 
     const char* args[] = {fPath.c_str(), nullptr};
+
+    if (chmod(fPath.c_str(), S_IRWXU | S_IRGRP | S_IROTH) != 0) {
+      perror("chmod");
+      return;
+    }
     execvp(fPath.c_str(), const_cast<char* const*>(args));
     perror("execvp");  // If exec fails
     exit(1);
