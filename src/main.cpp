@@ -113,11 +113,13 @@ string doubleQuoteParsing(string src, int* startIndex) {
     if(src.at(i) == '"') {
       *startIndex = i;
       break;
-    } else if(src.at(i) == '\'') {
-      if(inSingleQuote) inSingleQuote = false;
-      else              inSingleQuote = true;
-      strBuilder += src.at(i);
-    } else if(src.at(i) == '\\' && i+1 < src.size() && !inSingleQuote) {
+    } 
+    // else if(src.at(i) == '\'') {
+    //   if(inSingleQuote) inSingleQuote = false;
+    //   else              inSingleQuote = true;
+    //   strBuilder += src.at(i);
+    // } 
+    else if(src.at(i) == '\\' && i+1 < src.size()) {
       strBuilder += src.at(i+1);
       ++i;
     } else 
