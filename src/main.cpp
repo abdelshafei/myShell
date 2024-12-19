@@ -119,8 +119,10 @@ string doubleQuoteParsing(string src, int* startIndex) {
       strBuilder += isEscapingChar(src, i+1);
       if(isEscapingChar(src, i+1) == "\"") ++i;
       else if(isEscapingChar(src, i+1) == "\\n") i = i + 2;
-    } else 
+      else if(isEscapingChar(src, i+1) == "\\") ++i;
+    } else {
       strBuilder += src.at(i);
+    }
   }
 
   return strBuilder;
