@@ -9,7 +9,7 @@
 
 using namespace std;
 
-vector<string> validCommands = {"exit", "echo", "type", "pwd", "cd", "cat", "history"};
+vector<string> validCommands = {"exit", "echo", "type", "pwd", "cd", "history"};
 bool isValidCommand(string cmd);
 
 vector<string> splitArgs(string src);
