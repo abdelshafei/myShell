@@ -124,18 +124,20 @@ string doubleQuoteParsing(string src, int* startIndex) {
 vector<string> splitArgs(string src) {
   string strBuilder = "";
   vector<string> args;
-
+    // add escaping space character into outputted args
   for(int i = 0; i <= src.size(); i++) {
     if(i == src.size() || src.at(i) == ' ') {
       if(!strBuilder.empty()) 
         args.push_back(strBuilder);
       strBuilder = "";
     } else {
-      if(src.at(i) == '\'') {
+      if(src.at(i) == '\'')
         strBuilder = singleQuoteParsing(src, &i);
-      }
-      else if(src.at(i) == '"') {
+      else if(src.at(i) == '"')
         strBuilder = doubleQuoteParsing(src, &i);
+      else if(src.at(i) == '\\' && i+1 < src.size()) {
+        strBuilder += src.at(i+1);
+        ++i;
       }
       else 
         strBuilder += src.at(i);
@@ -197,18 +199,18 @@ void excuteProgram(string path, vector<string> args) {
 }
 
 void readFileContent(const string& filePath) {
-  std::ifstream file(filePath);
+  ifstream file(filePath);
 
   if (!file.is_open()) {
-      std::cerr << "Error: Could not open the file " << filePath << std::endl;
+      cerr << "Error: Could not open the file " << filePath << endl;
       return;
   }
 
-  std::ostringstream contentStream;
+  ostringstream contentStream;
   contentStream << file.rdbuf(); // Read the entire file buffer into the stream
 
-  std::string content = contentStream.str(); // Convert to string
-  std::cout << content;
+  string content = contentStream.str(); // Convert to string
+  cout << content;
 
   file.close();
 }
