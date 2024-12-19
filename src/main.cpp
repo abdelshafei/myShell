@@ -112,7 +112,6 @@ string doubleQuoteParsing(string src, int* startIndex) {
   string strBuilder = "";
 
   for(int i = *startIndex + 1; i < src.size(); i++) {
-    cout << src.at(i) << endl;
     if(src.at(i) == '"') {
       *startIndex = i;
       break;
