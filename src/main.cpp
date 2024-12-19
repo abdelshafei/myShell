@@ -145,10 +145,11 @@ vector<string> splitArgs(string src) {
       else if(src.at(i) == '"') {
         strBuilder = doubleQuoteParsing(src, &i);
       }
-      else if(src.at(i) == '\\' && isEscapingChar(src, i+1) != "") {
+      else if(src.at(i) == '\\' && (isEscapingChar(src, i+1) != "" || src.at(i+1) == ' ')) {
         strBuilder += isEscapingChar(src, i+1);
         if(isEscapingChar(src, i+1).size() == 1) i += 1;
         else if (isEscapingChar(src, i+1).size() == 2) i += 2;
+        else if(src.at(i+1) == ' ') i += 1;
 
       } else {
         strBuilder += src.at(i);
@@ -236,8 +237,6 @@ string isEscapingChar(string src, int index) {
     return "\"";
   else if(src.at(index) == '\\')
     return "\\";
-  else if(src.at(index) == ' ')
-    return " ";
   else 
     return "";
 }
