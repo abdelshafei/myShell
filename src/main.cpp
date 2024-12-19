@@ -201,8 +201,6 @@ void excuteProgramWCat(string fPath) {
 
   if(pid == 0) { //Child process (excutes the excutable)
 
-    cout << filesystem::exists(fPath) <<  endl;
-    cout << fPath.c_str() << endl;
     const char* args[] = {fPath.c_str(), nullptr};
     execvp(fPath.c_str(), const_cast<char* const*>(args));
     perror("execvp");  // If exec fails
