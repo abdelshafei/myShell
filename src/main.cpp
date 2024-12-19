@@ -119,10 +119,11 @@ string doubleQuoteParsing(string src, int* startIndex) {
     //   else              inSingleQuote = true;
     //   strBuilder += src.at(i);
     // } 
-    else if(src.at(i) == '\\' && i+1 < src.size()) {
-      strBuilder += src.at(i+1);
-      ++i;
-    } else 
+    // else if(src.at(i) == '\\' && i+1 < src.size()) {
+    //   strBuilder += src.at(i+1);
+    //   ++i;
+    // } 
+    else 
       strBuilder += src.at(i);
   }
 
