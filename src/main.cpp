@@ -22,7 +22,7 @@ string searchPath(string cmd);
 void excuteProgram(string path, vector<string> args); 
 void readFileContent(const string& filePath);
 
-bool isEscapingChar(string src, int index);
+string isEscapingChar(string src, int index);
 
 int main() {
   // Flush after every std::cout / std:cerr
@@ -110,14 +110,15 @@ string singleQuoteParsing(string src, int* startIndex) {
 // implement escaping characters 
 string doubleQuoteParsing(string src, int* startIndex) {
   string strBuilder = "";
-  bool inSingleQuote = false; 
 
   for(int i = *startIndex + 1; i < src.size(); i++) {
     if(src.at(i) == '"') {
       *startIndex = i;
       break;
-    } else if(src.at(i) == '\\' && isEscapingChar(src, i+1)) {
-
+    } else if(src.at(i) == '\\' && isEscapingChar(src, i+1) != "") {
+      strBuilder += isEscapingChar(src, i+1);
+      if(isEscapingChar(src, i+1) == "\"") ++i;
+      else if(isEscapingChar(src, i+1) == "\\n") i + 2;
     } else 
       strBuilder += src.at(i);
   }
@@ -219,13 +220,13 @@ void readFileContent(const string& filePath) {
   file.close();
 }
 
-bool isEscapingChar(string src, int index) {
-  if(index >= src.size()) return false;
-  
+string isEscapingChar(string src, int index) {
+  if(index >= src.size()) return "";
+
   if(index+1 < src.size() && src.at(index) == '\\' && src.at(index+1) == 'n')
-    return true;
+    return "\\n";
   else if(src.at(index) == '\"')
-    return true;
+    return "\"";
   else 
-    return false;
+    return "";
 }
