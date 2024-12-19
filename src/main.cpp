@@ -5,8 +5,7 @@
 #include <filesystem>
 #include <sys/wait.h>
 #include <unistd.h>
-#include <sys/stat.h>
-
+#include <fstream>
 
 using namespace std;
 
@@ -20,7 +19,7 @@ string doubleQuoteParsing(string src, int* startIndex);
 vector<string> getDirectories(string p);
 string searchPath(string cmd);
 void excuteProgram(string path, vector<string> args); 
-void excuteProgramWCat(string fPtah);
+void readFileContent(const string& filePath);
 
 int main() {
   // Flush after every std::cout / std:cerr
@@ -70,7 +69,7 @@ int main() {
       }
     } else if(args.at(0) == "cat") {
       for(int i = 1; i < args.size(); i++) {
-        excuteProgramWCat(args.at(i));
+        readFileContent(args.at(i));
       }
     } else {
       if(searchPath(args.at(0)) == "")
@@ -197,22 +196,19 @@ void excuteProgram(string path, vector<string> args) {
   } 
 }
 
-void excuteProgramWCat(string fPath) {
-    pid_t pid = fork();
+void readFileContent(const string& filePath) {
+  std::ifstream file(filePath);
 
-  if(pid == 0) { //Child process (excutes the excutable)
-
-    const char* args[] = {fPath.c_str(), nullptr};
-
-    if (chmod(fPath.c_str(), S_IRWXU | S_IRGRP | S_IROTH) != 0) {
-      perror("chmod");
+  if (!file.is_open()) {
+      std::cerr << "Error: Could not open the file " << filePath << std::endl;
       return;
-    }
-    execvp(fPath.c_str(), const_cast<char* const*>(args));
-    perror("execvp");  // If exec fails
-    exit(1);
-  } else if(pid > 0 ) { //Parent process (excutes the actual program)
-    int status;
-    waitpid(pid, &status, 0); // waits until the child process has excuted the file and exits
-  } 
+  }
+
+  std::ostringstream contentStream;
+  contentStream << file.rdbuf(); // Read the entire file buffer into the stream
+
+  std::string content = contentStream.str(); // Convert to string
+  std::cout << content << std::endl;
+
+  file.close();
 }
