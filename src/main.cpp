@@ -230,6 +230,8 @@ string isEscapingChar(string src, int index) {
     return "\"";
   else if(src.at(index) == '\\')
     return "\\";
+  else if(index+1 < src.size() && src.at(index) == '\\' && src.at(index+1) == ' ')
+    return " ";
   else 
     return "";
 }
