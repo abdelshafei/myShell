@@ -14,7 +14,7 @@ bool isValidCommand(string cmd);
 
 vector<string> splitArgs(string src);
 string singleQuoteParsing(string src, int* startIndex);
-string doubleQouteParsing(string src, int* startIndex);
+string doubleQuoteParsing(string src, int* startIndex);
 
 vector<string> getDirectories(string p);
 string searchPath(string cmd);
@@ -135,7 +135,7 @@ vector<string> splitArgs(string src) {
       if(src.at(i) == '\'')
         strBuilder = singleQuoteParsing(src, &i);
       else if(src.at(i) == '"') 
-        strBuilder = doubleQouteParsing(src, &i);
+        strBuilder = doubleQuoteParsing(src, &i);
       else 
         strBuilder += src.at(i);
     }
