@@ -116,6 +116,7 @@ string doubleQuoteParsing(string src, int* startIndex) {
     } else if(src.at(i) == '\'') {
       if(inSingleQuote) inSingleQuote = false;
       else              inSingleQuote = true;
+      strBuilder += src.at(i);
     } else if(src.at(i) == '\\' && i+1 < src.size() && !inSingleQuote) {
       strBuilder += src.at(i+1);
       ++i;
