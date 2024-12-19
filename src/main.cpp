@@ -9,9 +9,13 @@
 
 using namespace std;
 
-vector<string> validCommands = {"exit", "echo", "type", "pwd", "cd"};
+vector<string> validCommands = {"exit", "echo", "type", "pwd", "cd", "cat", "history"};
 bool isValidCommand(string cmd);
+
 vector<string> splitArgs(string src);
+string singleQuoteParsing(string src, int* startIndex);
+string doubleQouteParsing(string src, int* startIndex);
+
 vector<string> getDirectories(string p);
 string searchPath(string cmd);
 void excuteProgram(string path, vector<string> args); 
@@ -62,6 +66,10 @@ int main() {
         string path = getenv("HOME");
         filesystem::current_path(path);
       }
+    } else if(args.at(0) == "cat") {
+      for(int i = 1; i < args.size(); i++) {
+        excuteProgramWCat(args.at(i));
+      }
     } else {
       if(searchPath(args.at(0)) == "")
         cout << input << ": command not found" << endl;
@@ -81,16 +89,57 @@ bool isValidCommand(string cmd) {
   return false;
 }
 
+string singleQuoteParsing(string src, int* startIndex) {
+  string strBuilder = "";
+
+  for(int i = *startIndex + 1; i < src.size(); i++) {
+    if(src.at(i) == '\'') {
+      *startIndex = i;
+      break;
+    }
+
+    strBuilder += src.at(i);
+  }
+
+  return strBuilder;
+}
+
+string doubleQuoteParsing(string src, int* startIndex) {
+  string strBuilder = "";
+
+  for(int i = *startIndex + 1; i < src.size(); i++) {
+    if(src.at(i) == '"') {
+      *startIndex = i;
+      break;
+    }
+
+    strBuilder += src.at(i);
+  }
+
+  return strBuilder;
+}
+
+//add individual arguments into one if they are encapsulated with a single/double qoutes and also removing those qoutes from them
 vector<string> splitArgs(string src) {
   string strBuilder = "";
   vector<string> args;
+  bool isSingleQuote = false;
+  bool isDoubleQoute = false;
+
   for(int i = 0; i <= src.size(); i++) {
     if(i == src.size() || src.at(i) == ' ') {
       args.insert(args.end(), strBuilder);
       strBuilder = "";
     } else {
-      strBuilder += src.at(i);
+      if(src.at(i) == '\'')
+        strBuilder = singleQuoteParsing(src, &i);
+      else if(src.at(i) == '"') 
+        strBuilder = doubleQouteParsing(src, &i);
+      else 
+        strBuilder += src.at(i);
     }
+
+
   }
 
   return args;
@@ -138,6 +187,19 @@ void excuteProgram(string path, vector<string> args) {
     c_args.push_back(nullptr); //acts as terminator to prevent execvp from reading out of bounds of the data
 
     execvp(path.c_str(), c_args.data());
+    perror("execvp");  // If exec fails
+    exit(1);
+  } else if(pid > 0 ) { //Parent process (excutes the actual program)
+    int status;
+    waitpid(pid, &status, 0); // waits until the child process has excuted the file and exits
+  } 
+}
+
+void excuteProgramWCat(string fPath) {
+    pid_t pid = fork();
+
+  if(pid == 0) { //Child process (excutes the excutable)
+    execvp(fPath.c_str(), nullptr);
     perror("execvp");  // If exec fails
     exit(1);
   } else if(pid > 0 ) { //Parent process (excutes the actual program)
