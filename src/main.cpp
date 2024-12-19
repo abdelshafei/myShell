@@ -127,13 +127,16 @@ vector<string> splitArgs(string src) {
 
   for(int i = 0; i <= src.size(); i++) {
     if(i == src.size() || src.at(i) == ' ') {
-      args.push_back(strBuilder);
+      if(!strBuilder.empty()) 
+        args.push_back(strBuilder);
       strBuilder = "";
     } else {
-      if(src.at(i) == '\'')
+      if(src.at(i) == '\'') {
         strBuilder = singleQuoteParsing(src, &i);
-      else if(src.at(i) == '"') 
+      }
+      else if(src.at(i) == '"') {
         strBuilder = doubleQuoteParsing(src, &i);
+      }
       else 
         strBuilder += src.at(i);
     }
