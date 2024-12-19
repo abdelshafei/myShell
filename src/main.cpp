@@ -128,10 +128,10 @@ vector<string> splitArgs(string src) {
   for(int i = 0; i <= src.size(); i++) {
     if(i == src.size() || src.at(i) == ' ') {
       args.push_back(strBuilder);
+      cout << "here" << endl;
       strBuilder = "";
     } else {
       if(src.at(i) == '\'') {
-        cout << "here" << endl;
         strBuilder = singleQuoteParsing(src, &i);
       }
       else if(src.at(i) == '"') 
