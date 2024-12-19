@@ -119,12 +119,7 @@ string doubleQuoteParsing(string src, int* startIndex) {
     } else if(src.at(i) == '\\' && isEscapingChar(src, i+1) != "") {
       strBuilder += isEscapingChar(src, i+1);
       if(isEscapingChar(src, i+1) == "\"") ++i;
-      else if(isEscapingChar(src, i+1) == "\\n") {
-        cout << "here" << endl;
-        cout << i << endl;
-        i + 2;
-        cout << i <<endl;
-      }
+      else if(isEscapingChar(src, i+1) == "\\n") i = i + 2;
     } else 
       strBuilder += src.at(i);
   }
