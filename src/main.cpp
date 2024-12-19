@@ -104,7 +104,7 @@ string singleQuoteParsing(string src, int* startIndex) {
 
   return strBuilder;
 }
-
+// implement escaping characters 
 string doubleQuoteParsing(string src, int* startIndex) {
   string strBuilder = "";
 
@@ -112,19 +112,20 @@ string doubleQuoteParsing(string src, int* startIndex) {
     if(src.at(i) == '"') {
       *startIndex = i;
       break;
-    }
-
-    strBuilder += src.at(i);
+    } else if(src.at(i) == '\\' && i+1 < src.size()) {
+      strBuilder += src.at(i+1);
+      ++i;
+    } else 
+      strBuilder += src.at(i);
   }
 
   return strBuilder;
 }
 
-//add individual arguments into one if they are encapsulated with a single/double qoutes and also removing those qoutes from them
 vector<string> splitArgs(string src) {
   string strBuilder = "";
   vector<string> args;
-    // add escaping space character into outputted args
+
   for(int i = 0; i <= src.size(); i++) {
     if(i == src.size() || src.at(i) == ' ') {
       if(!strBuilder.empty()) 
