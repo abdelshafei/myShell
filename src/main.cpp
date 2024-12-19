@@ -200,7 +200,9 @@ void excuteProgramWCat(string fPath) {
     pid_t pid = fork();
 
   if(pid == 0) { //Child process (excutes the excutable)
-    execvp(fPath.c_str(), nullptr);
+
+    const char* args[] = {fPath.c_str(), nullptr};
+    execvp(fPath.c_str(), const_cast<char* const*>(args));
     perror("execvp");  // If exec fails
     exit(1);
   } else if(pid > 0 ) { //Parent process (excutes the actual program)
