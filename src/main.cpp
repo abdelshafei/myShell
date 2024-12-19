@@ -144,6 +144,7 @@ vector<string> splitArgs(string src) {
       else if(src.at(i) == '"')
         strBuilder = doubleQuoteParsing(src, &i);
       else if(src.at(i) == '\\' && i+1 < src.size() && isEscapingChar(src, i+1) != "") {
+        cout << "here" << endl;
         strBuilder += src.at(i+1);
         ++i;
       } else 
