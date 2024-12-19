@@ -120,7 +120,7 @@ string doubleQuoteParsing(string src, int* startIndex) {
       if(isEscapingChar(src, i+1) == "\"") ++i;
       else if(isEscapingChar(src, i+1) == "\\n") {
         cout << "here" << endl;
-        i + 2;
+        i + 3;
       }
     } else 
       strBuilder += src.at(i);
@@ -144,7 +144,6 @@ vector<string> splitArgs(string src) {
       else if(src.at(i) == '"')
         strBuilder = doubleQuoteParsing(src, &i);
       else if(src.at(i) == '\\' && i+1 < src.size() && isEscapingChar(src, i+1) != "") {
-        cout << "here" << endl;
         strBuilder += src.at(i+1);
         ++i;
       } else 
