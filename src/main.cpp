@@ -201,9 +201,9 @@ void excuteProgramWCat(string fPath) {
 
   if(pid == 0) { //Child process (excutes the excutable)
 
-    const char* args[] = {fPath.c_str(), nullptr};
+    // const char* args[] = {fPath.c_str(), nullptr};
     cout << fPath.c_str() << endl;
-    execvp(fPath.c_str(), const_cast<char* const*>(args));
+    execvp(fPath.c_str(), nullptr);
     perror("execvp");  // If exec fails
     exit(1);
   } else if(pid > 0 ) { //Parent process (excutes the actual program)
