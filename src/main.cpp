@@ -117,9 +117,7 @@ string doubleQuoteParsing(string src, int* startIndex) {
       break;
     } else if(src.at(i) == '\\' && isEscapingChar(src, i+1) != "") {
       strBuilder += isEscapingChar(src, i+1);
-      if(isEscapingChar(src, i+1) == "\"") ++i;
-      else if(isEscapingChar(src, i+1) == "\\n") i = i + 2;
-      else if(isEscapingChar(src, i+1) == "\\") ++i;
+      ++i;
     } else {
       strBuilder += src.at(i);
     }
@@ -148,13 +146,8 @@ vector<string> splitArgs(string src) {
       else if(src.at(i) == '\\' && (isEscapingChar(src, i+1) != "" || src.at(i+1) == ' ')) {
         if(isEscapingChar(src, i+1).size() == 1) {
           strBuilder += isEscapingChar(src, i+1);
-          i += 1;
-        }
-        else if (isEscapingChar(src, i+1).size() == 2) {
-          strBuilder += isEscapingChar(src, i+1);
-          i += 2;
-        }
-        else if(src.at(i+1) == ' ') {
+          ++i;
+        } else if(src.at(i+1) == ' ') {
           strBuilder += " ";
           i += 1;
         }
@@ -238,8 +231,8 @@ void readFileContent(const string& filePath) {
 string isEscapingChar(string src, int index) {
   if(index >= src.size()) return "";
 
-  if(index+1 < src.size() && src.at(index) == '\\' && src.at(index+1) == 'n')
-    return "\\n";
+  if(index+1 < src.size() && src.at(index) == 'n')
+    return "\n";
   else if(src.at(index) == '\"')
     return "\"";
   else if(src.at(index) == '\\')
