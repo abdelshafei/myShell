@@ -19,6 +19,7 @@ string doubleQouteParsing(string src, int* startIndex);
 vector<string> getDirectories(string p);
 string searchPath(string cmd);
 void excuteProgram(string path, vector<string> args); 
+void excuteProgramWCat(string fPtah);
 
 int main() {
   // Flush after every std::cout / std:cerr
