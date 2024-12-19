@@ -140,6 +140,8 @@ vector<string> splitArgs(string src) {
         strBuilder += src.at(i);
     }
 
+    cout << i << endl;
+
 
   }
 
