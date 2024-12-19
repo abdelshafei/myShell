@@ -43,6 +43,7 @@ int main() {
       return exitCode;
     } else if(args.at(0) == "echo") {
       for(int i = 1; i < args.size(); i++) {
+        cout << args.size() << endl;
         cout << args.at(i) << " ";
       }
       cout << endl;
