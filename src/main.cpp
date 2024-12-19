@@ -121,7 +121,9 @@ string doubleQuoteParsing(string src, int* startIndex) {
       if(isEscapingChar(src, i+1) == "\"") ++i;
       else if(isEscapingChar(src, i+1) == "\\n") {
         cout << "here" << endl;
+        cout << i << endl;
         i + 2;
+        cout << i <<endl;
       }
     } else 
       strBuilder += src.at(i);
