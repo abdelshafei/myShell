@@ -134,19 +134,25 @@ vector<string> splitArgs(string src) {
 
   for(int i = 0; i <= src.size(); i++) {
     if(i == src.size() || src.at(i) == ' ') {
-      if(!strBuilder.empty()) 
+      if(!strBuilder.empty()) {
         args.push_back(strBuilder);
+      }
       strBuilder = "";
     } else {
-      if(src.at(i) == '\'')
+      if(src.at(i) == '\'') {
         strBuilder = singleQuoteParsing(src, &i);
-      else if(src.at(i) == '"')
+      }
+      else if(src.at(i) == '"') {
         strBuilder = doubleQuoteParsing(src, &i);
+      }
       else if(src.at(i) == '\\' && isEscapingChar(src, i+1) != "") {
-        strBuilder += src.at(i+1);
-        cout << src.at(i+1) << endl;
-      } else 
+        strBuilder += isEscapingChar(src, i+1);
+        if(isEscapingChar(src, i+1).size() == 1) i += 1;
+        else if (isEscapingChar(src, i+1).size() == 2) i += 2;
+
+      } else {
         strBuilder += src.at(i);
+      }
     }
 
   }
