@@ -74,6 +74,10 @@ int main() {
       for(int i = 1; i < args.size(); i++) {
         readFileContent(args.at(i));
       }
+    } else if(args.at(1) == ">" || args.at(1) == "1>") {
+
+    } else if(args.at(1) == "2>") {
+
     } else {
       if(searchPath(args.at(0)) == "")
         cout << input << ": command not found" << endl;
