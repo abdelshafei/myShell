@@ -24,6 +24,8 @@ void readFileContent(const string& filePath);
 
 string isEscapingChar(string src, int index);
 
+void treeVisual(const string& path, const string& prefix);
+
 int main() {
   // Flush after every std::cout / std:cerr
   cout << unitbuf;
@@ -74,6 +76,8 @@ int main() {
       for(int i = 1; i < args.size(); i++) {
         readFileContent(args.at(i));
       }
+    } else if(args.at(0) == "tree-path") {
+      treeVisual(args.at(1), "");
     } else if(args.at(1) == ">" || args.at(1) == "1>") {
 
     } else if(args.at(1) == "2>") {
@@ -244,4 +248,19 @@ string isEscapingChar(string src, int index) {
     return "\\";
   else 
     return "";
+}
+
+void treeVisual(const string& path, const string& prefix) {
+  if(!filesystem::exists(path)) {
+    cout << path << ": path not found in your system" << endl;
+    return;
+  } 
+
+  for (const auto& entry : filesystem::directory_iterator(path)) {
+    cout << prefix << "|-- " << entry.path().filename().string() << endl;
+
+    if (filesystem::is_directory(entry.status())) {
+      treeVisual(entry.path(), prefix + "|   ");
+    }
+  }
 }
