@@ -9,7 +9,7 @@
 
 using namespace std;
 
-vector<string> validCommands = {"exit", "echo", "type", "pwd", "cd", "history"};
+vector<string> validCommands = {"exit", "echo", "type", "pwd", "cd", "history", "tree-path"};
 
 bool isValidCommand(string cmd);
 
